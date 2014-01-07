@@ -1,15 +1,15 @@
 import pandas as pd
 
 def _sign(number):
-  '''return sign +/- of number'''
+  """return sign +/- of number"""
   if number==0: return ''
   elif number>0: return '+'
   else: return '-'
 
 def _isSignChanged(data, idx):
-  '''Check whether data[idx] sign is different
+  """Check whether data[idx] sign is different
      than data[idx+1]
-  '''
+  """
   last_idx = len(data)-1
   next_idx = idx+1
   if next_idx > last_idx: return False
@@ -19,7 +19,7 @@ def _isSignChanged(data, idx):
   else: return True
   
 def extremeOf(data):
-  '''return a sub-series of data which holds the extreme point'''
+  """return a sub-series of data which holds the extreme point"""
   assert isinstance(data, pd.Series)
   diff=data.shift(1)-data
   rng=xrange(0,len(diff))

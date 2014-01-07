@@ -14,14 +14,15 @@ def showBorder(fileName):
 		return None;
 
 	img_clone = img_orig.copy();
-	img_thres = img_clone[:,:,3:]; #only alpha channel considered and reshape to shallower structure
-	img_thres = img_thres.reshape(img_thres.shape[0],img_thres.shape[1]);
-	cv2.imshow('threshold',img_thres);  #debug info: to show threshold image
+	img_alpha = img_clone[:,:,3:]; #only alpha channel considered and reshape to shallower structure
+	img_alpha = img_alpha.reshape(img_alpha.shape[0],img_alpha.shape[1]);
+	#cv2.imshow('Alpha',img_alpha);  #debug info: to show threshold image
 
-	#cont,hier = cv2.findContours(img_thres, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_TC89_L1);
+	ret,img_alpha = cv2.threshold(img_alpha,5,1,cv2.THRESH_BINARY);
+	#cont,hier = cv2.findContours(img_alpha, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_TC89_L1);
 	#very most outsider contour
-	cont,hier = cv2.findContours(img_thres, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE);
-	#cont,hier = cv2.findContours(img_thres, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE);
-	cv2.drawContours(img_orig, cont, -1, (255,255,128), thickness=2);
-	cv2.imshow('final',img_orig);
+	cont,hier = cv2.findContours(img_alpha, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE);
+	#cont,hier = cv2.findContours(img_alpha, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE);
+	cv2.drawContours(img_clone, cont, -1, (255,255,128), thickness=2);
+	cv2.imshow('final',img_clone);
 	cv2.waitKey();
